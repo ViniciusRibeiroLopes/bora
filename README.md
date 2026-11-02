@@ -111,19 +111,6 @@ Este projeto foi construído utilizando as melhores práticas do ecossistema mod
 
 ---
 
-## 🌐 Deploy na Vercel
-
-O Bora! foi arquitetado para rodar com excelência na **Vercel** usando Serverless Functions:
-
-1. Faça o push do seu código para o seu repositório no GitHub.
-2. Acesse a [Vercel](https://vercel.com/) e importe o repositório.
-3. Nas configurações do projeto (**Settings > Environment Variables**), adicione:
-   - `UPSTASH_REDIS_REST_URL`: URL REST do seu banco Upstash Redis.
-   - `UPSTASH_REDIS_REST_TOKEN`: Token REST do seu banco Upstash Redis.
-4. Clique em **Deploy** e seu agendador estará no ar! 🚀
-
----
-
 ## 🧠 Arquitetura e Segurança
 
 - **Sem persistência invasiva:** Os dados do rolê possuem TTL de expiração automática de 180 dias.
