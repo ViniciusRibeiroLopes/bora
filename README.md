@@ -2,7 +2,7 @@
 
 <br />
 
-# bora!
+# 🍾 bora!
 
 **Do "vamos marcar" para "tô chegando" — sem 200 mensagens no meio.**
 
@@ -28,11 +28,13 @@ Encontre a data que combina com todo mundo, sem cadastro, sem senha e sem frescu
 <div align="center">
 
 ### Criação do rolê
+
 <img src="assets/ss_home.png" alt="Tela inicial do Bora! — Criação de rolê" width="100%" />
 
 <br /><br />
 
 ### Heatmap de disponibilidade e melhor data
+
 <img src="assets/ss_demo.png" alt="Tela de resultados do Bora! — Heatmap de votos e melhor data" width="100%" />
 
 </div>
@@ -56,18 +58,18 @@ Zero burocracia. Zero mensagem perdida. Só o rolê.
 
 ## ✨ Funcionalidades
 
-| Funcionalidade | Detalhe |
-|---|---|
-| ⚡ **Zero cadastro** | Acesse e vote só com seu nome — sem conta, sem senha, sem app |
-| 🗳️ **Votação em 3 estados** | **Posso** · **Se for o jeito** · **Não posso** — clique e alterna |
-| 📊 **Heatmap visual** | Veja de relance quem pode em cada data e qual tem maior quorum |
-| 🏆 **Melhor data automática** | Algoritmo de ranking resolve empates e destaca a data ideal |
-| 🔒 **Link de organizador** | Controle administrativo por URL privada com hash — sem conta necessária |
-| 🎉 **Fechamento + RSVP** | Feche a data oficial e colete confirmação de presença com confetes 🎊 |
-| 🔄 **Sincronização ao vivo** | Atualização automática a cada 15s — veja a galera responder em tempo real |
-| 🌙 **Dark mode nativo** | Interface escura com acentos neon lima — bonita por padrão |
-| ♿ **Acessibilidade** | Foco visível, leitores de tela, teclado e `prefers-reduced-motion` |
-| 📱 **Responsivo** | Funciona muito bem no celular, tablet e desktop |
+| Funcionalidade                | Detalhe                                                                   |
+| ----------------------------- | ------------------------------------------------------------------------- |
+| ⚡ **Zero cadastro**          | Acesse e vote só com seu nome — sem conta, sem senha, sem app             |
+| 🗳️ **Votação em 3 estados**   | **Posso** · **Se for o jeito** · **Não posso** — clique e alterna         |
+| 📊 **Heatmap visual**         | Veja de relance quem pode em cada data e qual tem maior quorum            |
+| 🏆 **Melhor data automática** | Algoritmo de ranking resolve empates e destaca a data ideal               |
+| 🔒 **Link de organizador**    | Controle administrativo por URL privada com hash — sem conta necessária   |
+| 🎉 **Fechamento + RSVP**      | Feche a data oficial e colete confirmação de presença com confetes 🎊     |
+| 🔄 **Sincronização ao vivo**  | Atualização automática a cada 15s — veja a galera responder em tempo real |
+| 🌙 **Dark mode nativo**       | Interface escura com acentos neon lima — bonita por padrão                |
+| ♿ **Acessibilidade**         | Foco visível, leitores de tela, teclado e `prefers-reduced-motion`        |
+| 📱 **Responsivo**             | Funciona muito bem no celular, tablet e desktop                           |
 
 ---
 
@@ -105,6 +107,7 @@ lib/
 ```
 
 **Decisões técnicas relevantes:**
+
 - **Concorrência atômica:** votos simultâneos usam scripts Lua (`EVAL`) no Redis — sem condições de corrida quando vários amigos votam ao mesmo tempo.
 - **Privacidade real:** o segredo do organizador é armazenado apenas como hash no servidor e nunca trafega para outros clientes.
 - **Dados com expiração:** rolês somem automaticamente após 180 dias — sem janitor jobs, sem cron.
@@ -153,20 +156,6 @@ Sem essas variáveis, a demonstração funciona, mas criar rolês reais retorna 
 
 ---
 
-## ☁️ Deploy na Vercel
-
-1. Suba o repositório para o GitHub (sem `node_modules`, `.next` ou `.env.local`).
-2. Crie um banco **Upstash Redis** no [console da Upstash](https://console.upstash.com/) ou via integração do Marketplace da Vercel.
-3. Importe o repositório na Vercel. Framework: **Next.js**.
-4. Em **Settings → Environment Variables**, adicione:
-   - `UPSTASH_REDIS_REST_URL`
-   - `UPSTASH_REDIS_REST_TOKEN`
-5. Clique em **Deploy**. Pronto. 🎉
-
-> **Importante:** nunca use prefixo `NEXT_PUBLIC_` nessas variáveis — elas são segredos de servidor.
-
----
-
 ## 🔒 Segurança
 
 - Corpo das requisições limitado a **10 KB**
@@ -174,26 +163,6 @@ Sem essas variáveis, a demonstração funciona, mas criar rolês reais retorna 
 - Cabeçalhos de segurança: `no-store`, `nosniff`, bloqueio de iframe, política de referenciador
 - Hash SHA-256 do segredo do organizador — a chave raw nunca é armazenada nem retornada
 - Votos atômicos via Lua no Redis — sem lost updates em acessos concorrentes
-
----
-
-## 🧪 Verificação
-
-```bash
-npm run typecheck   # Checa tipos TypeScript
-npm test            # Roda os testes de modelo (unitários)
-npm run build       # Build de produção completo
-```
-
-Para rodar os testes de integração HTTP com o servidor local:
-
-```bash
-# Linux / macOS
-BORA_TEST_URL=http://localhost:3000 npm test
-
-# Windows PowerShell
-$env:BORA_TEST_URL='http://localhost:3000'; npm.cmd test
-```
 
 ---
 
@@ -207,6 +176,6 @@ Este projeto está sob a licença [MIT](LICENSE). Use, fork e faça seu rolê ac
 
 **[🌐 borarole.vercel.app](https://borarole.vercel.app/)**
 
-*A vida acontece fora do grupo.*
+_A vida acontece fora do grupo._
 
 </div>
