@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useDragControls, useReducedMotion } from "motion/react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { localDay } from "@/lib/model";
 
@@ -132,6 +132,7 @@ export function Modal({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
+  const dragControls = useDragControls();
   useEffect(() => {
     const previous = document.activeElement as HTMLElement;
     const oldOverflow = document.body.style.overflow;
@@ -144,7 +145,7 @@ export function Modal({
         ref.current?.querySelectorAll<HTMLElement>(
           'button:not(:disabled), input, a[href], select, textarea, [tabindex="0"]',
         ) || [],
-      );
+      ).filter((node) => node.getClientRects().length > 0);
       const first = nodes[0],
         last = nodes.at(-1);
       if (!first) {
@@ -171,7 +172,8 @@ export function Modal({
     return () => {
       document.body.style.overflow = oldOverflow;
       document.removeEventListener("keydown", keydown);
-      previous?.focus();
+      const target = previous?.isConnected ? previous : document.getElementById("main");
+      target?.focus({ preventScroll: true });
     };
   }, [onClose]);
   return (
@@ -192,11 +194,25 @@ export function Modal({
         aria-modal="true"
         aria-labelledby="modal-title"
         className="modal"
+        drag={reduce ? false : "y"}
+        dragControls={dragControls}
+        dragListener={false}
+        dragConstraints={{ top: 0, bottom: 0 }}
+        dragElastic={{ top: 0, bottom: 0.35 }}
+        onDragEnd={(_, info) => {
+          if (info.offset.y > 80 && matchMedia("(max-width: 899px)").matches) onClose();
+        }}
         initial={{ opacity: 0, scale: reduce ? 1 : 0.96, y: reduce ? 0 : 12 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.98 }}
         transition={{ type: "spring", duration: 0.28, bounce: 0.12 }}
       >
+        <button
+          className="sheet-handle"
+          aria-label="Fechar painel; você também pode arrastar para baixo"
+          onPointerDown={(event) => { if (!reduce) dragControls.start(event); }}
+          onClick={onClose}
+        ><span /></button>
         <button
           className="icon-button modal-x"
           aria-label="Fechar janela"

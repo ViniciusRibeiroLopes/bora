@@ -3,6 +3,7 @@
 import {
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
   type FormEvent,
@@ -32,8 +33,13 @@ import {
   BarChart3,
   PartyPopper,
   LoaderCircle,
+  Eye,
+  CircleHelp,
+  Send,
 } from "lucide-react";
 import { Calendar, Modal, Toast } from "./components";
+import { InvitePreview } from "./invite-preview";
+import { CreateSteps, LoadingScreen, MobileNav, ThemeToggle } from "./experience";
 import {
   counts,
   emojis,
@@ -168,6 +174,7 @@ export default function Page() {
   const [closeSlot, setCloseSlot] = useState("");
   const [syncError, setSyncError] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [createStep, setCreateStep] = useState(0);
   const [title, setTitle] = useState("");
   const [organizer, setOrganizer] = useState("");
   const [description, setDescription] = useState("");
@@ -188,7 +195,7 @@ export default function Page() {
     }, 4200);
   }, []);
   const demo = event?.id === "demo";
-  const ranking = event ? rankedSlots(event) : [];
+  const ranking = useMemo(() => event ? rankedSlots(event) : [], [event]);
   const best = ranking[0];
   const official = event?.slots.find((s) => s.id === event.officialSlot);
   const mine = event?.participants.find((p) => p.id === myId);
@@ -310,6 +317,7 @@ export default function Page() {
     if (busy) return;
     history.replaceState({}, "", "/");
     setEvent(null);
+    setCreateStep(0);
     setError("");
     setLinkError(false);
     setOwner("");
@@ -319,6 +327,7 @@ export default function Page() {
     setModal(null);
     setTab("vote");
     setSyncError(false);
+    window.scrollTo({ top: 0, behavior: "instant" });
   }
   function showDemo() {
     setEvent(makeDemo());
@@ -329,6 +338,7 @@ export default function Page() {
     setError("");
     setLocalMode(false);
     history.replaceState({}, "", "/");
+    window.scrollTo({ top: 0, behavior: "instant" });
   }
   function publicUrl() {
     return `${location.origin}/?r=${event?.id}`;
@@ -351,6 +361,15 @@ export default function Page() {
   async function create(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (inFlight.current) return;
+    if (createStep === 0) {
+      if (title.trim().length < 2 || !organizer.trim()) {
+        setError("Preencha o nome do rolê e quem está chamando.");
+        return;
+      }
+      setCreateStep(1);
+      setError("");
+      return;
+    }
     if (!selectedSlots.length || selectedSlots.length > 12) {
       setError("Escolha de 1 a 12 opções de data e horário.");
       return;
@@ -498,6 +517,16 @@ export default function Page() {
     setCloseSlot(best?.id || event?.slots[0]?.id || "");
     setModal("close");
   }
+  function focusSection(id: string) {
+    const section = document.getElementById(id);
+    section?.focus({ preventScroll: true });
+    section?.scrollIntoView({ behavior: reduced ? "instant" : "smooth", block: "start" });
+  }
+  function selectTab(next: Tab) {
+    setTab(next);
+    setError("");
+    focusSection("event-workspace");
+  }
   const spring = { type: "spring" as const, duration: 0.26, bounce: 0.12 };
 
   return (
@@ -505,7 +534,7 @@ export default function Page() {
       <a href="#main" className="skip-link">
         Pular para o conteúdo
       </a>
-      <header className="site-header">
+      <header className="site-header" inert={!!modal}>
         <div className="header-inner">
           <button
             className="logo"
@@ -517,6 +546,7 @@ export default function Page() {
           </button>
           <span className="header-tag">A vida acontece fora do grupo.</span>
           <nav aria-label="Navegação principal">
+            <ThemeToggle />
             <button className="text-button" onClick={() => setModal("help")}>
               Como funciona <ArrowUpRight size={15} />
             </button>
@@ -526,13 +556,14 @@ export default function Page() {
           </nav>
         </div>
       </header>
-      <main id="main" className="container">
+      <main id="main" className="container" tabIndex={-1} inert={!!modal}>
+        <AnimatePresence mode="wait" initial={false}>
+        <motion.div key={loading ? "loading" : linkError ? "error" : event?.id || "create"} {...fade}
+          onAnimationComplete={() => {
+            if (!loading && !modal) document.getElementById("main")?.focus({ preventScroll: true });
+          }}>
         {loading ? (
-          <div className="loading" aria-label="Carregando rolê" role="status">
-            <div className="skeleton title-skeleton" />
-            <div className="skeleton body-skeleton" />
-            <p>Preparando o rolê…</p>
-          </div>
+          <LoadingScreen />
         ) : linkError ? (
           <section className="error-page">
             <span className="large-emoji">🫠</span>
@@ -573,30 +604,31 @@ export default function Page() {
                   Encontre sua galera.
                 </p>
               </div>
-              <div className="intro-stamp" aria-hidden="true">
-                <ArrowUpRight size={42} strokeWidth={1.5} />
-                <span>
-                  BONS PLANOS
-                  <br />
-                  MERECEM SAIR
-                  <br />
-                  <b>DO PAPEL.</b>
-                </span>
+              <div className="intro-note">
+                <div className="friends-stack" aria-hidden="true"><span>✌️</span><span>🍕</span><span>🪩</span><i><ArrowUpRight size={20} /></i></div>
+                <p>A melhor parte do plano?<br /><strong>Estar junto.</strong></p>
               </div>
             </section>
             <div className="create-layout">
-              <section className="create-panel">
+              <section className="create-panel" id="create-workspace" tabIndex={-1}>
+                <CreateSteps step={createStep} onBack={() => { setCreateStep(0); setError(""); }} />
                 <div className="panel-heading">
                   <div className="section-icon">
                     <CalendarDays size={21} />
                   </div>
                   <div>
-                    <h2>Qual é o próximo rolê?</h2>
-                    <p>Um minuto aqui. Boas horas lá fora.</p>
+                    <h2>{createStep === 0 ? "Qual é o próximo rolê?" : "Quando a gente se vê?"}</h2>
+                    <p>{createStep === 0 ? "Comece com uma boa ideia. O resto é com a galera." : "Escolha algumas datas. A galera decide junto."}</p>
                   </div>
                   <span className="pill subtle">SEM CADASTRO</span>
                 </div>
-                <form onSubmit={create}>
+                <form onSubmit={create} aria-busy={busy}>
+                  <AnimatePresence mode="wait" initial={false}>
+                  <motion.div key={createStep} {...fade} onAnimationComplete={() => {
+                    if (createStep === 1) focusSection("create-workspace");
+                    else document.querySelector<HTMLInputElement>('input[name="event-title"]')?.focus({ preventScroll: true });
+                  }}>
+                  {createStep === 0 ? <>
                   <fieldset className="emoji-picker">
                     <legend>A vibe do encontro</legend>
                     {emojis.map((icon) => (
@@ -616,6 +648,7 @@ export default function Page() {
                     <label>
                       Nome do rolê <span>*</span>
                       <input
+                        name="event-title"
                         required
                         minLength={2}
                         maxLength={80}
@@ -646,10 +679,10 @@ export default function Page() {
                       onChange={(e) => setDescription(e.target.value)}
                     />
                   </label>
-                  <div className="form-divider" />
+                  </> : <>
                   <div className="field-heading">
                     <div>
-                      <h3>Quando a gente se vê?</h3>
+                      <h3 id="date-step-title" tabIndex={-1}>Dias possíveis</h3>
                       <p>Marque os dias e ajuste os horários.</p>
                     </div>
                     <span className="pill lime-soft">
@@ -669,7 +702,7 @@ export default function Page() {
                           <p>
                             Um dia? Vários dias?
                             <br />
-                            Escolha no calendário ao lado.
+                            Toque nas datas do calendário.
                           </p>
                           <span>Deixa a agenda decidir depois.</span>
                         </div>
@@ -739,11 +772,16 @@ export default function Page() {
                   <p className="timezone-note">
                     <Clock3 size={12} /> Horários em {timeLabel}. Até 12 opções.
                   </p>
+                  </>}
+                  </motion.div>
+                  </AnimatePresence>
                   {error && (
                     <p className="error-message" role="alert">
                       {error}
                     </p>
                   )}
+                  <div className="create-actions">
+                  {createStep === 1 && <button type="button" className="secondary step-back" onClick={() => { setCreateStep(0); setError(""); }} aria-label="Voltar para os detalhes do encontro"><ArrowLeft size={19} /></button>}
                   <button
                     type="submit"
                     className="primary create-button"
@@ -754,93 +792,18 @@ export default function Page() {
                     ) : (
                       <Link2 size={19} />
                     )}
-                    {busy ? "Preparando o rolê…" : "Gerar link do rolê"}
+                    {busy ? "Preparando o rolê…" : createStep === 0 ? "Escolher as datas" : "Criar rolê e convidar"}
                     <ArrowRight size={19} />
                   </button>
+                  </div>
                   <div className="form-foot">
                     <LockKeyhole size={12} /> Sem login. Sem baixar app. Só
                     bora.
                   </div>
                 </form>
               </section>
-              <aside className="preview-column">
-                <div className="preview-caption">
-                  <span className="tiny-dot" /> UMA PRÉVIA DO QUE VEM AÍ{" "}
-                  <span>↘</span>
-                </div>
-                <div className="invite-card">
-                  <div className="ticket-top">
-                    <span>VOCÊ TEM UM ROLÊ.</span>
-                    <ArrowUpRight size={20} />
-                  </div>
-                  <div className="ticket-body">
-                    <div className="ticket-emoji">
-                      {emoji}
-                      <span className="spark-one">✳</span>
-                      <span className="spark-two">✦</span>
-                    </div>
-                    <h2>{title || "O próximo encontro da sua galera."}</h2>
-                    <p>
-                      {description ||
-                        "Tem coisa que uma chamada de vídeo não resolve."}
-                    </p>
-                    <div className="ticket-info">
-                      <CalendarDays size={16} />
-                      <span>
-                        {selectedSlots.length
-                          ? `${selectedSlots.length} opções pra combinar`
-                          : "O melhor dia, a gente decide junto"}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="ticket-bottom">
-                    <div className="mini-avatar">
-                      {(organizer || "V").slice(0, 1).toUpperCase()}
-                    </div>
-                    <span>
-                      {organizer
-                        ? `${organizer} tá chamando`
-                        : "Você + sua galera"}
-                    </span>
-                    <span className="ticket-brand">bora!</span>
-                  </div>
-                </div>
-                <div className="recipe">
-                  <h3>Do grupo pro mundo real.</h3>
-                  <div>
-                    <span>01</span>
-                    <p>
-                      <b>Joga as datas na roda.</b>
-                      <br />
-                      Dá umas opções pra galera.
-                    </p>
-                  </div>
-                  <div>
-                    <span>02</span>
-                    <p>
-                      <b>Manda o link no grupo.</b>
-                      <br />
-                      Cada um diz quando pode.
-                    </p>
-                  </div>
-                  <div>
-                    <span>03</span>
-                    <p>
-                      <b>Bateu a agenda? Bora!</b>
-                      <br />
-                      Feche a data e faça acontecer.
-                    </p>
-                  </div>
-                </div>
-                <div className="aside-note">
-                  <Sparkles size={16} />
-                  <p>
-                    O rolê perfeito é o que sai
-                    <br />
-                    do “qualquer dia desses”.
-                  </p>
-                </div>
-              </aside>
+              <InvitePreview emoji={emoji} title={title} description={description}
+                organizer={organizer} optionCount={selectedSlots.length} />
             </div>
           </>
         ) : (
@@ -906,7 +869,7 @@ export default function Page() {
               </button>
             </section>
             <div className="event-layout">
-              <section className="voting-panel">
+              <section className="voting-panel" id="event-workspace" tabIndex={-1}>
                 <div
                   className="tabs"
                   role="tablist"
@@ -964,8 +927,13 @@ export default function Page() {
                     key={tab}
                     {...fade}
                     role="tabpanel"
+                    tabIndex={-1}
                     id={`panel-${tab}`}
                     aria-labelledby={`tab-${tab}`}
+                    onAnimationComplete={() => {
+                      if (document.activeElement === document.body && !modal)
+                        document.getElementById(`panel-${tab}`)?.focus({ preventScroll: true });
+                    }}
                   >
                     {tab === "vote" ? (
                       <div className="vote-content">
@@ -1149,6 +1117,7 @@ export default function Page() {
                             </span>
                           ))}
                         </div>
+                        <p className="table-hint"><ArrowRight size={14} /> Deslize a tabela para ver todas as datas</p>
                         <div
                           className="heatmap-scroll"
                           tabIndex={0}
@@ -1427,8 +1396,19 @@ export default function Page() {
             </div>
           </>
         )}
+        </motion.div>
+        </AnimatePresence>
       </main>
-      <footer className="site-footer">
+      {!loading && !linkError && <MobileNav inert={!!modal} actions={event ? [
+        { label: "Responder", icon: CalendarDays, active: tab === "vote", onClick: () => selectTab("vote") },
+        { label: "Resultados", icon: BarChart3, active: tab === "results", onClick: () => selectTab("results") },
+        { label: "Convidar", icon: Send, onClick: () => demo ? notify("Crie um rolê de verdade para gerar o link.") : setModal("share") },
+      ] : [
+        { label: "Criar rolê", icon: Plus, onClick: () => focusSection("create-workspace") },
+        { label: "Ver convite", icon: Eye, onClick: () => focusSection("invite-preview") },
+        { label: "Como funciona", icon: CircleHelp, onClick: () => setModal("help") },
+      ]} />}
+      <footer className="site-footer" inert={!!modal}>
         <div>
           <span className="footer-logo">bora!</span>
           <span>Menos desencontro. Mais histórias.</span>

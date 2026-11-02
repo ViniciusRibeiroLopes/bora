@@ -29,11 +29,11 @@ Encontre a data que combina com todo mundo, sem cadastro, sem senha e sem frescu
 
 ### Criação do rolê
 
-<img src="assets/ss_home.png" alt="Tela inicial do Bora! — Criação de rolê" width="100%" />
+<img src="assets/redesign-desktop-dark.jpg" alt="Tela inicial do Bora! — Criação de rolê" width="100%" />
 
 <br />
 
-<img src="assets/ss_demo.png" alt="Tela de resultados do Bora! — Heatmap de votos e melhor data" width="100%" />
+<img src="assets/redesign-results-light.jpg" alt="Tela de resultados do Bora! — Heatmap de votos e melhor data" width="100%" />
 
 </div>
 
@@ -65,7 +65,7 @@ Zero burocracia. Zero mensagem perdida. Só o rolê.
 | 🔒 **Link de organizador**    | Controle administrativo por URL privada com hash — sem conta necessária   |
 | 🎉 **Fechamento + RSVP**      | Feche a data oficial e colete confirmação de presença com confetes 🎊     |
 | 🔄 **Sincronização ao vivo**  | Atualização automática a cada 15s — veja a galera responder em tempo real |
-| 🌙 **Dark mode nativo**       | Interface escura com acentos neon lima — bonita por padrão                |
+| 🌙 **Temas claro e escuro**       | Acompanha o sistema, com escolha manual persistida e acentos verde-lima                |
 | ♿ **Acessibilidade**         | Foco visível, leitores de tela, teclado e `prefers-reduced-motion`        |
 | 📱 **Responsivo**             | Funciona muito bem no celular, tablet e desktop                           |
 
@@ -93,9 +93,12 @@ Funções serverless da Vercel não mantêm conexões persistentes entre invoca�
 
 ```
 app/
-├── page.tsx            SPA completa: criação, votação, resultados, compartilhamento
-├── components.tsx      Calendário, modal com foco contido, toast notifications
-├── globals.css         Design system próprio (sem Tailwind) + contrato de animações
+├── page.tsx            Orquestração: criação em etapas, votação, resultados e compartilhamento
+├── components.tsx      Calendário, modal/painel arrastável com foco contido e toast
+├── experience.tsx      Tema, navegação mobile, etapas, revelação e skeleton
+├── invite-preview.tsx  Convite reutilizável com prévia dos dados
+├── experience.css     Temas e composição responsiva mobile-first
+├── globals.css         Tokens, componentes base e contrato de animações
 ├── layout.tsx          Metadados SEO, fonte local (Manrope), idioma
 └── api/event/route.ts  API REST: GET / POST / PATCH com rate limit e validação
 
