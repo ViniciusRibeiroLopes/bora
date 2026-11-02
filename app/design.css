@@ -1,0 +1,32 @@
+/* Resultados no celular: cartões por data, melhor data primeiro, salvar sempre à mão. */
+.date-cards { list-style: none; margin: 0 0 16px; padding: 0; display: grid; gap: 10px; }
+.date-card { background: var(--raised); border: 1px solid var(--line); border-radius: 18px; padding: 14px 16px 16px; }
+.date-card.top { border-color: #8cc63f; }
+.date-card-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; margin-bottom: 12px; }
+.date-card-head strong { font-size: 17px; letter-spacing: -0.02em; }
+.date-card-head small { color: var(--muted); font-size: 13px; }
+.date-card-flag { font-size: 12px; font-weight: 800; color: #5f8f1c; }
+.date-card-count { margin-left: auto; color: var(--muted); font-size: 13px; }
+.date-card-count b { color: var(--text); font-size: 26px; font-weight: 800; letter-spacing: -0.03em; }
+.vote-bar { display: flex; height: 8px; border-radius: 99px; overflow: hidden; background: var(--line); }
+.vote-bar i { display: block; height: 100%; transform-origin: left center; }
+.vote-bar .yes { background: #8cc63f; }
+.vote-bar .maybe { background: #e9b44c; }
+.vote-bar .no { background: #e07a7a; }
+.date-card-people { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.dot-person { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; font-size: 12px; font-weight: 800; border: 1.5px solid var(--line); color: var(--muted); }
+.dot-person.yes { background: #8cc63f; border-color: #8cc63f; color: #11130f; }
+.dot-person.maybe { background: #e9b44c; border-color: #e9b44c; color: #11130f; }
+.dot-person.no { border-color: #e07a7a; color: #e07a7a; text-decoration: line-through; }
+@media (max-width: 899px) {
+  .results-aside { display: contents; }
+  .event-layout > .voting-panel { order: 1; }
+  .event-layout .best-card { order: 2; }
+  .event-layout[data-tab="results"] .best-card { order: 0; }
+  .event-layout .ranking-note { order: 3; }
+  .event-layout .people-panel { order: 4; }
+  .event-layout .owner-tip { order: 5; }
+  .heatmap-scroll, .table-hint { display: none; }
+  .save-vote { position: sticky; bottom: calc(86px + env(safe-area-inset-bottom, 0px)); z-index: 5; box-shadow: 0 14px 30px #0005; }
+}
+@media (min-width: 900px) { .date-cards { display: none; } }

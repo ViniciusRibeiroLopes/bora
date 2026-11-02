@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/manrope";
 import "./globals.css";
 import "./experience.css";
+import "./design.css";
 export const metadata: Metadata = {
   title: "Bora! — Agendador de rolês sem frescura",
   description:

@@ -843,7 +843,7 @@ export default function Page() {
                 <Link2 size={16} /> Convidar galera
               </button>
             </section>
-            <div className="event-layout">
+            <div className="event-layout" data-tab={tab}>
               <section className="voting-panel" id="event-workspace" tabIndex={-1}>
                 <div
                   className="tabs"
@@ -1060,6 +1060,40 @@ export default function Page() {
                             </span>
                           ))}
                         </div>
+                        {ranking.length > 0 && (
+                          <ol className="date-cards" aria-label="Datas por votos">
+                            {ranking.map((s, i) => {
+                              const total = event.participants.length;
+                              return (
+                                <motion.li key={s.id} className={`date-card ${i === 0 ? "top" : ""}`}
+                                  initial={{ opacity: 0, y: reduced ? 0 : 10 }} animate={{ opacity: 1, y: 0 }}
+                                  transition={{ duration: 0.22, delay: reduced ? 0 : Math.min(i * 0.05, 0.2) }}>
+                                  <div className="date-card-head">
+                                    <strong>{slotLabel(s.at)}</strong>
+                                    <small>{s.at.slice(11)}</small>
+                                    {i === 0 && <span className="date-card-flag">★ Mais votada</span>}
+                                    <span className="date-card-count"><b>{s.yes}</b>/{total} podem</span>
+                                  </div>
+                                  <div className="vote-bar" role="img" aria-label={`${s.yes} posso, ${s.maybe} talvez, ${s.no} não posso`}>
+                                    {(["yes", "maybe", "no"] as const).map((v, k) => (
+                                      <motion.i key={v} className={v} style={{ width: `${(s[v] / total) * 100}%` }}
+                                        initial={{ scaleX: reduced ? 1 : 0 }} animate={{ scaleX: 1 }}
+                                        transition={{ duration: 0.4, delay: reduced ? 0 : 0.1 + k * 0.06 }} />
+                                    ))}
+                                  </div>
+                                  <div className="date-card-people">
+                                    {event.participants.map((p) => (
+                                      <span key={p.id} className={`dot-person ${p.votes[s.id] || "unanswered"}`}
+                                        title={`${p.name}: ${p.votes[s.id] ? statusInfo[p.votes[s.id]].label : "Sem voto"}`}>
+                                        {p.name[0].toUpperCase()}
+                                      </span>
+                                    ))}
+                                  </div>
+                                </motion.li>
+                              );
+                            })}
+                          </ol>
+                        )}
                         <p className="table-hint"><ArrowRight size={14} /> Deslize a tabela para ver todas as datas</p>
                         <div
                           className="heatmap-scroll"
