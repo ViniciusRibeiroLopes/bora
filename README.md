@@ -31,9 +31,7 @@ Encontre a data que combina com todo mundo, sem cadastro, sem senha e sem frescu
 
 <img src="assets/ss_home.png" alt="Tela inicial do Bora! — Criação de rolê" width="100%" />
 
-<br /><br />
-
-### Heatmap de disponibilidade e melhor data
+<br />
 
 <img src="assets/ss_demo.png" alt="Tela de resultados do Bora! — Heatmap de votos e melhor data" width="100%" />
 
