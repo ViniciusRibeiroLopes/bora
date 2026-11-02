@@ -72,11 +72,17 @@ test("repeat participant updates existing vote; same nickname is not identity", 
   event = transition(event, { action: "vote", name: "Gui", votes }, "two");
   assert.equal(event.participants.length, 2);
 });
-test("reject missing votes, alien slots and RSVP before close", () => {
+test("unvoted slots default to 'no', rejects alien slots and RSVP before close", () => {
   const event = fixture();
-  assert.throws(() =>
-    transition(event, { action: "vote", name: "A", votes: {} }, "a"),
+  const [a, b] = event.slots;
+  const voted = transition(
+    event,
+    { action: "vote", name: "A", votes: { [a.id]: "yes" } },
+    "a",
   );
+  assert.equal(voted.participants[0].votes[a.id], "yes");
+  assert.equal(voted.participants[0].votes[b.id], "no");
+
   assert.throws(() =>
     transition(
       event,

@@ -481,6 +481,7 @@ export default function Page() {
         writeLocal("bora:name", name.trim());
         setSaved(true);
         if (input.action === "vote") {
+          setVotes(input.votes);
           setTab("results");
           notify("Resposta salva. Sua galera já pode ver!");
         } else
@@ -1007,14 +1008,14 @@ export default function Page() {
                             </p>
                             <button
                               className={`primary save-vote ${saved ? "saved" : ""}`}
-                              disabled={
-                                busy ||
-                                !name.trim() ||
-                                !event.slots.every((s) => votes[s.id])
-                              }
-                              onClick={() =>
-                                mutate({ action: "vote", name, votes })
-                              }
+                              disabled={busy || !name.trim()}
+                              onClick={() => {
+                                const filled: Record<string, Vote> = {};
+                                for (const s of event.slots)
+                                  filled[s.id] = votes[s.id] ?? "no";
+                                setVotes(filled);
+                                mutate({ action: "vote", name, votes: filled });
+                              }}
                             >
                               {busy ? (
                                 <LoaderCircle size={18} className="spin" />
@@ -1032,7 +1033,7 @@ export default function Page() {
                             </button>
                             {!event.slots.every((s) => votes[s.id]) && (
                               <p className="form-foot">
-                                Responda todas as datas para salvar.
+                                Datas sem resposta serão marcadas como não posso.
                               </p>
                             )}
                           </>

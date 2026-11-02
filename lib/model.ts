@@ -143,11 +143,14 @@ export function transition(
       if (next.officialSlot)
         throw new AppError("A votação terminou. Confirme sua presença!", 409);
       if (
-        Object.keys(input.votes).length !== next.slots.length ||
-        !next.slots.every((s) => input.votes[s.id])
+        Object.keys(input.votes).some((id) => !next.slots.some((s) => s.id === id))
       )
-        throw new AppError("Responda todas as datas.");
-      person.votes = input.votes;
+        throw new AppError("Data inválida.");
+      const normalizedVotes: Record<string, Vote> = {};
+      for (const slot of next.slots) {
+        normalizedVotes[slot.id] = input.votes[slot.id] ?? "no";
+      }
+      person.votes = normalizedVotes;
     } else {
       if (!next.officialSlot)
         throw new AppError("Aguarde a definição da data.", 409);
