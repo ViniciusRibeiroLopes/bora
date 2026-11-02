@@ -1,0 +1,228 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bg-glow" cx="50%" cy="15%" r="70%">
+      <stop offset="0%" stop-color="#1f2619" />
+      <stop offset="50%" stop-color="#11130f" />
+      <stop offset="100%" stop-color="#0a0c09" />
+    </radialGradient>
+
+    <!-- Card Gradients -->
+    <linearGradient id="window-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#191c16" />
+      <stop offset="100%" stop-color="#131511" />
+    </linearGradient>
+
+    <linearGradient id="lime-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d9ff7a" />
+      <stop offset="100%" stop-color="#c8f36b" />
+    </linearGradient>
+
+    <linearGradient id="best-card" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#242b1c" />
+      <stop offset="100%" stop-color="#1a1e15" />
+    </linearGradient>
+
+    <!-- Drop Shadows -->
+    <filter id="shadow-window" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="24" stdDeviation="32" flood-color="#000000" flood-opacity="0.7" />
+    </filter>
+    <filter id="lime-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="#c8f36b" flood-opacity="0.3" />
+    </filter>
+
+    <style>
+      .font { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .bold { font-weight: 700; }
+      .semibold { font-weight: 600; }
+      .medium { font-weight: 500; }
+      .regular { font-weight: 400; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="680" fill="url(#bg-glow)" />
+
+  <!-- Subtle ambient decorative glow circles -->
+  <circle cx="200" cy="80" r="180" fill="#c8f36b" opacity="0.04" filter="blur(60px)" />
+  <circle cx="1000" cy="400" r="220" fill="#c8f36b" opacity="0.03" filter="blur(70px)" />
+
+  <!-- App Window Container -->
+  <g transform="translate(80, 40)" filter="url(#shadow-window)">
+    <!-- Window Border & Outer Shell -->
+    <rect width="1040" height="600" rx="20" fill="url(#window-bg)" stroke="#30362a" stroke-width="1.5" />
+
+    <!-- Window Titlebar -->
+    <rect width="1040" height="48" rx="20" fill="#151812" />
+    <path d="M 0,28 L 0,48 L 1040,48 L 1040,28 Z" fill="#151812" />
+    <line x1="0" y1="48" x2="1040" y2="48" stroke="#252a20" stroke-width="1" />
+
+    <!-- macOS Window Buttons -->
+    <circle cx="28" cy="24" r="6" fill="#ff5f56" />
+    <circle cx="48" cy="24" r="6" fill="#ffbd2e" />
+    <circle cx="68" cy="24" r="6" fill="#27c93f" />
+
+    <!-- Browser Address Capsule -->
+    <rect x="360" y="11" width="320" height="26" rx="8" fill="#1c2018" stroke="#2b3124" stroke-width="1" />
+    <text class="font medium" x="520" y="28" fill="#a0a696" font-size="12" text-anchor="middle">bora.vercel.app/?r=pizza-dos-amigos</text>
+
+    <!-- App Header Inside Window -->
+    <g transform="translate(40, 72)">
+      <!-- Logo -->
+      <text class="font bold" x="0" y="24" fill="#f3f3e9" font-size="24" letter-spacing="-0.5">Bora<tspan fill="#c8f36b">!</tspan></text>
+      <text class="font medium" x="78" y="22" fill="#757d6b" font-size="13">| Agendador de rolês sem frescura</text>
+
+      <!-- Action Button -->
+      <rect x="830" y="2" width="130" height="34" rx="10" fill="#21251d" stroke="#373e30" stroke-width="1" />
+      <text class="font medium" x="895" y="24" fill="#f3f3e9" font-size="13" text-anchor="middle">+ Novo rolê</text>
+    </g>
+
+    <line x1="40" y1="120" x2="1000" y2="120" stroke="#262c20" stroke-width="1" />
+
+    <!-- Main Content Grid -->
+    <g transform="translate(40, 138)">
+      <!-- Event Header Card -->
+      <g>
+        <rect width="960" height="92" rx="16" fill="#191d16" stroke="#2d3426" stroke-width="1" />
+        
+        <!-- Emoji Badge -->
+        <rect x="18" y="18" width="56" height="56" rx="14" fill="#23281e" stroke="#363f2e" stroke-width="1" />
+        <text class="font" x="46" y="54" font-size="28" text-anchor="middle">🍕</text>
+
+        <!-- Title & Info -->
+        <text class="font bold" x="90" y="42" fill="#f3f3e9" font-size="20">Pizza, papo &amp; nada de pressa</text>
+        <text class="font regular" x="90" y="64" fill="#a0a696" font-size="13">Criado por Bia • 📍 Na casa da Bia • ⏰ Horário de Brasília (America/Sao_Paulo)</text>
+
+        <!-- Invite Button -->
+        <g transform="translate(800, 26)">
+          <rect width="142" height="40" rx="12" fill="url(#lime-grad)" filter="url(#lime-shadow)" />
+          <path d="M 22 20 L 26 16 M 26 16 L 31 16 M 26 16 L 26 21" stroke="#11130f" stroke-width="2" stroke-linecap="round" />
+          <text class="font bold" x="78" y="25" fill="#11130f" font-size="13" text-anchor="middle">Convidar galera</text>
+        </g>
+      </g>
+
+      <!-- Best Date Card (Winner Banner) -->
+      <g transform="translate(0, 108)">
+        <rect width="960" height="64" rx="14" fill="url(#best-card)" stroke="#c8f36b" stroke-opacity="0.6" stroke-width="1.5" />
+        
+        <circle cx="34" cy="32" r="14" fill="#c8f36b" fill-opacity="0.2" />
+        <text class="font" x="34" y="38" font-size="14" text-anchor="middle">🏆</text>
+
+        <text class="font bold" x="62" y="28" fill="#c8f36b" font-size="14">MELHOR DATA ENCONTRADA</text>
+        <text class="font regular" x="62" y="48" fill="#e2e6db" font-size="13">Sábado, 19:00 — <tspan class="font bold" fill="#c8f36b">4 de 4</tspan> amigos confirmaram disponibilidade (100% de presença!)</text>
+
+        <!-- Lock in date CTA -->
+        <rect x="800" y="14" width="142" height="36" rx="10" fill="#293322" stroke="#485c37" stroke-width="1" />
+        <text class="font bold" x="871" y="37" fill="#c8f36b" font-size="12" text-anchor="middle">✓ Fechar esta data</text>
+      </g>
+
+      <!-- Heatmap / Voting Matrix Table -->
+      <g transform="translate(0, 188)">
+        <!-- Table Frame -->
+        <rect width="960" height="230" rx="14" fill="#171a14" stroke="#293023" stroke-width="1" />
+
+        <!-- Table Header -->
+        <rect width="960" height="42" rx="14" fill="#1c2018" />
+        <path d="M 0,28 L 0,42 L 960,42 L 960,28 Z" fill="#1c2018" />
+        <line x1="0" y1="42" x2="960" y2="42" stroke="#2b3225" stroke-width="1" />
+
+        <text class="font semibold" x="24" y="26" fill="#88917e" font-size="12">PARTICIPANTE (4)</text>
+        <text class="font semibold" x="380" y="26" fill="#88917e" font-size="12" text-anchor="middle">SEX, 19:00</text>
+        <text class="font bold" x="610" y="26" fill="#c8f36b" font-size="12" text-anchor="middle">★ SÁB, 19:00 (TOP)</text>
+        <text class="font semibold" x="840" y="26" fill="#88917e" font-size="12" text-anchor="middle">DOM, 19:00</text>
+
+        <!-- Participant Rows -->
+        <!-- Row 1: Bia -->
+        <g transform="translate(0, 42)">
+          <line x1="0" y1="42" x2="960" y2="42" stroke="#22271d" stroke-width="1" />
+          <circle cx="36" cy="21" r="11" fill="#323c28" />
+          <text class="font bold" x="36" y="25" fill="#c8f36b" font-size="10" text-anchor="middle">B</text>
+          <text class="font medium" x="58" y="26" fill="#f3f3e9" font-size="13">Bia <tspan fill="#757d6b" font-size="11">(Org)</tspan></text>
+          
+          <!-- Votes -->
+          <!-- Posso -->
+          <rect x="330" y="9" width="100" height="24" rx="6" fill="#203318" stroke="#385a28" stroke-width="1" />
+          <text class="font bold" x="380" y="25" fill="#75e252" font-size="11" text-anchor="middle">✓ Posso</text>
+
+          <!-- Posso -->
+          <rect x="560" y="9" width="100" height="24" rx="6" fill="#203318" stroke="#385a28" stroke-width="1" />
+          <text class="font bold" x="610" y="25" fill="#75e252" font-size="11" text-anchor="middle">✓ Posso</text>
+
+          <!-- Talvez -->
+          <rect x="790" y="9" width="100" height="24" rx="6" fill="#332c14" stroke="#5c4e1f" stroke-width="1" />
+          <text class="font bold" x="840" y="25" fill="#e8c84d" font-size="11" text-anchor="middle">~ Talvez</text>
+        </g>
+
+        <!-- Row 2: Gui -->
+        <g transform="translate(0, 84)">
+          <line x1="0" y1="42" x2="960" y2="42" stroke="#22271d" stroke-width="1" />
+          <circle cx="36" cy="21" r="11" fill="#2d3328" />
+          <text class="font bold" x="36" y="25" fill="#b9a4ef" font-size="10" text-anchor="middle">G</text>
+          <text class="font medium" x="58" y="26" fill="#f3f3e9" font-size="13">Gui</text>
+          
+          <!-- Talvez -->
+          <rect x="330" y="9" width="100" height="24" rx="6" fill="#332c14" stroke="#5c4e1f" stroke-width="1" />
+          <text class="font bold" x="380" y="25" fill="#e8c84d" font-size="11" text-anchor="middle">~ Talvez</text>
+
+          <!-- Posso -->
+          <rect x="560" y="9" width="100" height="24" rx="6" fill="#203318" stroke="#385a28" stroke-width="1" />
+          <text class="font bold" x="610" y="25" fill="#75e252" font-size="11" text-anchor="middle">✓ Posso</text>
+
+          <!-- Não posso -->
+          <rect x="790" y="9" width="100" height="24" rx="6" fill="#351a1a" stroke="#632929" stroke-width="1" />
+          <text class="font bold" x="840" y="25" fill="#f36d6d" font-size="11" text-anchor="middle">✕ Não posso</text>
+        </g>
+
+        <!-- Row 3: Lari -->
+        <g transform="translate(0, 126)">
+          <line x1="0" y1="42" x2="960" y2="42" stroke="#22271d" stroke-width="1" />
+          <circle cx="36" cy="21" r="11" fill="#2d3328" />
+          <text class="font bold" x="36" y="25" fill="#69dbd6" font-size="10" text-anchor="middle">L</text>
+          <text class="font medium" x="58" y="26" fill="#f3f3e9" font-size="13">Lari</text>
+          
+          <!-- Não posso -->
+          <rect x="330" y="9" width="100" height="24" rx="6" fill="#351a1a" stroke="#632929" stroke-width="1" />
+          <text class="font bold" x="380" y="25" fill="#f36d6d" font-size="11" text-anchor="middle">✕ Não posso</text>
+
+          <!-- Posso -->
+          <rect x="560" y="9" width="100" height="24" rx="6" fill="#203318" stroke="#385a28" stroke-width="1" />
+          <text class="font bold" x="610" y="25" fill="#75e252" font-size="11" text-anchor="middle">✓ Posso</text>
+
+          <!-- Posso -->
+          <rect x="790" y="9" width="100" height="24" rx="6" fill="#203318" stroke="#385a28" stroke-width="1" />
+          <text class="font bold" x="840" y="25" fill="#75e252" font-size="11" text-anchor="middle">✓ Posso</text>
+        </g>
+
+        <!-- Row 4: Rafa -->
+        <g transform="translate(0, 168)">
+          <line x1="0" y1="42" x2="960" y2="42" stroke="#22271d" stroke-width="1" />
+          <circle cx="36" cy="21" r="11" fill="#2d3328" />
+          <text class="font bold" x="36" y="25" fill="#f3bd52" font-size="10" text-anchor="middle">R</text>
+          <text class="font medium" x="58" y="26" fill="#f3f3e9" font-size="13">Rafa</text>
+          
+          <!-- Posso -->
+          <rect x="330" y="9" width="100" height="24" rx="6" fill="#203318" stroke="#385a28" stroke-width="1" />
+          <text class="font bold" x="380" y="25" fill="#75e252" font-size="11" text-anchor="middle">✓ Posso</text>
+
+          <!-- Posso -->
+          <rect x="560" y="9" width="100" height="24" rx="6" fill="#203318" stroke="#385a28" stroke-width="1" />
+          <text class="font bold" x="610" y="25" fill="#75e252" font-size="11" text-anchor="middle">✓ Posso</text>
+
+          <!-- Posso -->
+          <rect x="790" y="9" width="100" height="24" rx="6" fill="#203318" stroke="#385a28" stroke-width="1" />
+          <text class="font bold" x="840" y="25" fill="#75e252" font-size="11" text-anchor="middle">✓ Posso</text>
+        </g>
+
+        <!-- Summary Bar -->
+        <g transform="translate(0, 210)">
+          <rect width="960" height="20" rx="4" fill="#141711" />
+          <text class="font bold" x="24" y="14" fill="#757d6b" font-size="11">TOTAL POSSO</text>
+          <text class="font bold" x="380" y="14" fill="#a0a696" font-size="11" text-anchor="middle">2 de 4</text>
+          <text class="font bold" x="610" y="14" fill="#c8f36b" font-size="11" text-anchor="middle">4 de 4 (100%)</text>
+          <text class="font bold" x="840" y="14" fill="#a0a696" font-size="11" text-anchor="middle">2 de 4</text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
+
