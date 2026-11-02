@@ -282,25 +282,6 @@ label > span {
   margin-top: 25px;
   color: var(--muted);
 }
-.intro-stamp {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  border: 1px solid var(--line);
-  color: var(--muted);
-  padding: 22px 24px;
-  border-radius: 50%;
-  transform: rotate(8deg);
-  margin-right: 30px;
-}
-.intro-stamp span {
-  font-size: 11px;
-  letter-spacing: 1.1px;
-  line-height: 1.6;
-}
-.intro-stamp b {
-  color: var(--accent);
-}
 .create-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.95fr) minmax(0, 1fr);
@@ -663,19 +644,6 @@ label > span {
   font-size: 64px;
   transform: rotate(-6deg);
 }
-.spark-one {
-  position: absolute;
-  right: -30px;
-  top: 1px;
-  font-size: 30px;
-  font-weight: 450;
-}
-.spark-two {
-  position: absolute;
-  left: -24px;
-  bottom: 11px;
-  font-size: 24px;
-}
 .ticket-body h2 {
   line-height: 1.2;
   letter-spacing: -1px;
@@ -718,58 +686,10 @@ label > span {
 .ticket-bottom:after {
   right: -10px;
 }
-.mini-avatar {
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  font-size: 10px;
-  background: #afcd78;
-  font-weight: 700;
-}
 .ticket-brand {
   font-weight: 900;
   letter-spacing: -1px;
   margin-left: auto;
-}
-.recipe h3 {
-  margin-bottom: 19px;
-}
-.recipe > div {
-  display: flex;
-  align-items: flex-start;
-  gap: 13px;
-  margin: 0 0 18px;
-}
-.recipe > div > span {
-  color: var(--muted);
-  font-size: 11px;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-}
-.recipe p {
-  color: var(--muted);
-  line-height: 1.8;
-}
-.recipe p b {
-  font-weight: 650;
-}
-.aside-note {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border-top: 1px solid var(--line);
-  margin: 26px 5px 0;
-  padding-top: 22px;
-  color: var(--muted);
-}
-.aside-note p {
-  color: var(--muted);
-  line-height: 1.7;
 }
 .site-footer {
   max-width: 1104px;

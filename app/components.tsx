@@ -11,6 +11,8 @@ export function Calendar({
   days: string[];
   onChange: (days: string[]) => void;
 }) {
+  const reduced = useReducedMotion();
+  const [direction, setDirection] = useState(1);
   const [month, setMonth] = useState(
     () => new Date(new Date().getFullYear(), new Date().getMonth(), 1),
   );
@@ -22,6 +24,7 @@ export function Calendar({
     0,
   ).getDate();
   function move(offset: number) {
+    setDirection(offset);
     setMonth(new Date(month.getFullYear(), month.getMonth() + offset, 1));
   }
   function arrow(event: React.KeyboardEvent<HTMLButtonElement>, index: number) {
@@ -74,7 +77,11 @@ export function Calendar({
           <ChevronRight size={18} />
         </button>
       </div>
-      <div className="calendar-grid">
+      <AnimatePresence mode="wait" initial={false}>
+      <motion.div className="calendar-grid" key={month.toISOString()}
+        initial={{ opacity: 0, x: reduced ? 0 : direction * 15 }}
+        animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}
+        transition={{ duration: .16 }}>
         {["SEG", "TER", "QUA", "QUI", "SEX", "SÁB", "DOM"].map((d) => (
           <span className="weekday" key={d}>
             {d}
@@ -106,11 +113,18 @@ export function Calendar({
                 )
               }
             >
-              {i + 1}
+              <AnimatePresence initial={false}>
+                {selected && <motion.span className="day-fill" aria-hidden="true"
+                  initial={{ scale: reduced ? 1 : .4, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: reduced ? 1 : .65, opacity: 0 }}
+                  transition={{ type: "spring", stiffness: 420, damping: 26 }} />}
+              </AnimatePresence>
+              <span className="day-label">{i + 1}</span>
             </button>
           );
         })}
-      </div>
+      </motion.div>
+      </AnimatePresence>
       <div className="calendar-foot">
         <span>
           <i className="tiny-dot" /> Escolha quantos dias quiser

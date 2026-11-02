@@ -29,11 +29,11 @@ Encontre a data que combina com todo mundo, sem cadastro, sem senha e sem frescu
 
 ### Criação do rolê
 
-<img src="assets/redesign-desktop-dark.jpg" alt="Tela inicial do Bora! — Criação de rolê" width="100%" />
+<img src="assets/personality-desktop-light.jpg" alt="Bora! — Novo visual e convite interativo" width="100%" />
 
 <br />
 
-<img src="assets/redesign-results-light.jpg" alt="Tela de resultados do Bora! — Heatmap de votos e melhor data" width="100%" />
+<img src="assets/personality-mobile-dark.jpg" alt="Bora! — Experiência mobile no tema escuro" width="390" />
 
 </div>
 
@@ -96,7 +96,8 @@ app/
 ├── page.tsx            Orquestração: criação em etapas, votação, resultados e compartilhamento
 ├── components.tsx      Calendário, modal/painel arrastável com foco contido e toast
 ├── experience.tsx      Tema, navegação mobile, etapas, revelação e skeleton
-├── invite-preview.tsx  Convite reutilizável com prévia dos dados
+├── invite-preview.tsx  Convite com frente/verso, datas e inclinação pelo mouse
+├── interactions.tsx    Ideias prontas, seletor de vibe, contadores e votos animados
 ├── experience.css     Temas e composição responsiva mobile-first
 ├── globals.css         Tokens, componentes base e contrato de animações
 ├── layout.tsx          Metadados SEO, fonte local (Manrope), idioma

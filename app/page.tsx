@@ -39,10 +39,10 @@ import {
 } from "lucide-react";
 import { Calendar, Modal, Toast } from "./components";
 import { InvitePreview } from "./invite-preview";
+import { AnimatedCount, IdeaStarter, VibePicker, VoteChoice } from "./interactions";
 import { CreateSteps, LoadingScreen, MobileNav, ThemeToggle } from "./experience";
 import {
   counts,
-  emojis,
   localDay,
   rankedSlots,
   slotLabel,
@@ -544,7 +544,7 @@ export default function Page() {
             bora<span>!</span>
             <i />
           </button>
-          <span className="header-tag">A vida acontece fora do grupo.</span>
+          <span className="header-tag">O próximo rolê começa aqui.</span>
           <nav aria-label="Navegação principal">
             <ThemeToggle />
             <button className="text-button" onClick={() => setModal("help")}>
@@ -583,42 +583,27 @@ export default function Page() {
         ) : !event ? (
           <>
             <section className="intro">
-              <div>
-                <div className="eyebrow">
-                  <span className="tiny-dot" /> MENOS MENSAGENS. MAIS MEMÓRIAS.
-                </div>
-                <h1>
-                  Do “vamos marcar”
-                  <br />
-                  para{" "}
-                  <span>
-                    “tô chegando”.
-                    <svg viewBox="0 0 380 15" aria-hidden="true">
-                      <path d="M3 10 Q175 -3 376 8" />
-                    </svg>
-                  </span>
+              <div className="intro-copy">
+                <div className="eyebrow">UM LINK. UMA DATA. TODO MUNDO LÁ.</div>
+                <h1><motion.span className="hero-line" initial={{ opacity: 0, y: reduced ? 0 : 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .4, ease }}>Bora sair</motion.span>
+                  <motion.em initial={{ opacity: 0, y: reduced ? 0 : 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .4, delay: reduced ? 0 : .07, ease }}>do grupo.
+                    <svg viewBox="0 0 380 15" aria-hidden="true"><motion.path d="M3 10 Q175 -3 376 8" initial={{ pathLength: reduced ? 1 : 0 }} animate={{ pathLength: 1 }} transition={{ duration: .5, delay: reduced ? 0 : .25 }} /></svg>
+                  </motion.em>
                 </h1>
-                <p>
-                  O dia que combina com todo mundo, sem 200 mensagens.
-                  <br className="desktop-break" /> Crie o rolê. Mande o link.
-                  Encontre sua galera.
-                </p>
+                <p>Você sugere as datas. Cada um diz quando pode.<br className="desktop-break" /> Pronto: agora tem encontro.</p>
               </div>
-              <div className="intro-note">
-                <div className="friends-stack" aria-hidden="true"><span>✌️</span><span>🍕</span><span>🪩</span><i><ArrowUpRight size={20} /></i></div>
-                <p>A melhor parte do plano?<br /><strong>Estar junto.</strong></p>
-              </div>
+              <IdeaStarter onChoose={(idea) => {
+                setTitle(idea.title); setEmoji(idea.emoji); setDescription(idea.description);
+                setCreateStep(0); setError(""); pulse(); focusSection("create-workspace");
+              }} />
             </section>
             <div className="create-layout">
               <section className="create-panel" id="create-workspace" tabIndex={-1}>
                 <CreateSteps step={createStep} onBack={() => { setCreateStep(0); setError(""); }} />
                 <div className="panel-heading">
-                  <div className="section-icon">
-                    <CalendarDays size={21} />
-                  </div>
                   <div>
                     <h2>{createStep === 0 ? "Qual é o próximo rolê?" : "Quando a gente se vê?"}</h2>
-                    <p>{createStep === 0 ? "Comece com uma boa ideia. O resto é com a galera." : "Escolha algumas datas. A galera decide junto."}</p>
+                    <p>{createStep === 0 ? "Dá um nome. Pode ser o apelido que só vocês entendem." : "Joga umas opções na roda. Ninguém precisa decidir agora."}</p>
                   </div>
                   <span className="pill subtle">SEM CADASTRO</span>
                 </div>
@@ -629,21 +614,7 @@ export default function Page() {
                     else document.querySelector<HTMLInputElement>('input[name="event-title"]')?.focus({ preventScroll: true });
                   }}>
                   {createStep === 0 ? <>
-                  <fieldset className="emoji-picker">
-                    <legend>A vibe do encontro</legend>
-                    {emojis.map((icon) => (
-                      <button
-                        key={icon}
-                        type="button"
-                        aria-label={`Tema ${icon}`}
-                        aria-pressed={emoji === icon}
-                        className={emoji === icon ? "active" : ""}
-                        onClick={() => setEmoji(icon)}
-                      >
-                        {icon}
-                      </button>
-                    ))}
-                  </fieldset>
+                  <VibePicker value={emoji} onChange={(value) => { setEmoji(value); pulse(); }} />
                   <div className="form-row">
                     <label>
                       Nome do rolê <span>*</span>
@@ -686,7 +657,7 @@ export default function Page() {
                       <p>Marque os dias e ajuste os horários.</p>
                     </div>
                     <span className="pill lime-soft">
-                      {selectedSlots.length}{" "}
+                      <AnimatedCount value={selectedSlots.length} />{" "}
                       {selectedSlots.length === 1 ? "opção" : "opções"}
                     </span>
                   </div>
@@ -707,8 +678,11 @@ export default function Page() {
                           <span>Deixa a agenda decidir depois.</span>
                         </div>
                       )}
+                      <AnimatePresence initial={false}>
                       {days.map((day) => (
-                        <div className="time-day" key={day}>
+                        <motion.div className="time-day" key={day} layout="position"
+                          initial={{ opacity: 0, x: reduced ? 0 : 12 }} animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: reduced ? 0 : -12 }} transition={{ duration: .2 }}>
                           <div>
                             <strong>{slotLabel(`${day}T12:00`)}</strong>
                             <button
@@ -765,8 +739,9 @@ export default function Page() {
                               <Plus size={12} /> Outro horário
                             </button>
                           )}
-                        </div>
+                        </motion.div>
                       ))}
+                      </AnimatePresence>
                     </div>
                   </div>
                   <p className="timezone-note">
@@ -803,7 +778,7 @@ export default function Page() {
                 </form>
               </section>
               <InvitePreview emoji={emoji} title={title} description={description}
-                organizer={organizer} optionCount={selectedSlots.length} />
+                organizer={organizer} slots={selectedSlots} />
             </div>
           </>
         ) : (
@@ -1022,40 +997,8 @@ export default function Page() {
                             </div>
                             <div className="slot-choices">
                               {event.slots.map((slot, i) => (
-                                <button
-                                  key={slot.id}
-                                  className={`slot-choice ${votes[slot.id] || "unanswered"}`}
-                                  onClick={() => cycle(slot.id)}
-                                  aria-label={`${slotLabel(slot.at, true)} às ${slot.at.slice(11)}: ${votes[slot.id] ? statusInfo[votes[slot.id]].label : "Sem resposta"}. Clique para alternar.`}
-                                >
-                                  <span className="slot-number">
-                                    {String(i + 1).padStart(2, "0")}
-                                  </span>
-                                  <span>
-                                    <strong>{slotLabel(slot.at)}</strong>
-                                    <small>
-                                      <Clock3 size={12} />
-                                      {slot.at.slice(11)}
-                                    </small>
-                                  </span>
-                                  <span
-                                    className="vote-answer"
-                                    key={votes[slot.id] || "empty"}
-                                  >
-                                    {votes[slot.id] ? (
-                                      <>
-                                        <b>
-                                          {statusInfo[votes[slot.id]].symbol}
-                                        </b>
-                                        {statusInfo[votes[slot.id]].short}
-                                      </>
-                                    ) : (
-                                      <>
-                                        <Plus size={16} /> Escolher
-                                      </>
-                                    )}
-                                  </span>
-                                </button>
+                                <VoteChoice key={slot.id} at={slot.at} index={i}
+                                  value={votes[slot.id]} onChange={() => cycle(slot.id)} />
                               ))}
                             </div>
                             <p className="timezone-note">
@@ -1261,13 +1204,13 @@ export default function Page() {
                     ) : (
                       <Sparkles size={17} />
                     )}
-                    {official ? "ESSE ROLÊ VAI SAIR" : "TÁ COM CARA DE ROLÊ"}
+                    {official ? "ESSE ROLÊ VAI SAIR" : "A ESCOLHA DA GALERA"}
                   </div>
                   <h2>
                     {official
                       ? "Tá marcado!"
                       : best
-                        ? "Temos uma favorita."
+                        ? "Esse dia tá ganhando."
                         : "A agenda tá aberta."}
                   </h2>
                   <p>

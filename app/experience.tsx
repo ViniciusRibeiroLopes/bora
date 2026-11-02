@@ -53,6 +53,7 @@ export function CreateSteps({ step, onBack }: { step: number; onBack: () => void
     {["O encontro", "Data e hora", "Compartilhar"].map((label, index) => (
       <li key={label} aria-current={step === index ? "step" : undefined}
         className={index < step ? "complete" : ""}>
+        {step === index && <motion.i className="step-line" layoutId="creation-step" transition={gentleTransition} aria-hidden="true" />}
         {index === 0 && step > 0 ? (
           <button type="button" onClick={onBack} aria-label="Voltar para O encontro">
             <span><Check size={14} /></span>{label}

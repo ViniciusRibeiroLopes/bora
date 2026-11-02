@@ -2,6 +2,18 @@
 
 Data: 2 de novembro de 2026.
 
+## Refinamento de personalidade e interação
+
+- Tipografia contrastante, formulário aberto, navegação plana e convite com aparência de papel. Removidos ornamentos e estilos sem uso.
+- Ideias prontas preenchem título, recado e vibe. Seletor com destaque móvel e reação do emoji; contadores, etapas, meses do calendário e votos têm transições próprias.
+- Convite com frente/verso para conferir as datas selecionadas. Inclinação por mouse usa motion values; toque não ativa o efeito. Movimento reduzido continua respeitado.
+- Componentes reutilizáveis concentrados em `app/interactions.tsx`. Sem novas dependências ou alterações na API.
+- Nesta rodada: `npm run build` e `npm run typecheck` aprovados; `npm test` com 7 aprovados e 1 integração ignorada por ausência de `BORA_TEST_URL`. A integração descrita abaixo pertence à rodada anterior.
+- Conferidos no navegador: preenchimento por ideia, troca de vibe, avanço das etapas, seleção/remoção de datas, mudança de mês, verso atualizado do convite e votação na demonstração nos três estados.
+- Temas claro/escuro e larguras de 320, 390 e 1440 px inspecionados, sem overflow horizontal da página nos cenários verificados. Versão compilada inspecionada também, sem avisos ou erros de console retornados.
+- Capturas atuais: `assets/personality-desktop-light.jpg` e `assets/personality-mobile-dark.jpg`.
+- Não houve medição de FPS em aparelho físico nem emulação de movimento reduzido no navegador nesta rodada.
+
 ## Implementação
 
 - Identidade verde-lima preservada, com hierarquia tipográfica, superfícies, espaçamentos e sombras revisados.

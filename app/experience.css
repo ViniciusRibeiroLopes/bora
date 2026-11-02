@@ -1,7 +1,8 @@
 /* Theme and responsive composition; component primitives live in globals.css. */
+:root { --bg: #151715; --panel: #1d211e; --raised: #292e29; --input: #1b1e1b; --line: #393f36; }
 :root[data-theme="light"] {
   color-scheme: light;
-  --bg: #f5f5ef; --panel: #fff; --raised: #eeefe7; --input: #f8f9f4;
+  --bg: #f3f0e8; --panel: #fffdf7; --raised: #eae6db; --input: #faf8f1;
   --line: #d8dece; --text: #20291c; --muted: #616c59;
   --accent: #46691d; --accent-soft: #e9f1db; --purple: #71539b;
   --yes: #355d23; --yes-bg: #e4efd9;
@@ -39,7 +40,7 @@ textarea { min-height: 96px; }
 .intro h1 { font-size: clamp(32px, 8.7vw, 52px); letter-spacing: -1.8px; line-height: 1.16; }
 .intro h1 svg { stroke-width: 2; opacity: .6; }
 .intro p { font-size: 14px; line-height: 1.8; max-width: 460px; }
-.desktop-break, .intro-note { display: none; }
+.desktop-break { display: none; }
 .create-layout, .event-layout { grid-template-columns: minmax(0, 1fr); gap: 32px; }
 .create-panel, .voting-panel { border-radius: 24px; min-width: 0; box-shadow: 0 16px 48px #0000000a; overflow: visible; }
 .create-panel { padding: 22px 18px; }
@@ -105,13 +106,7 @@ textarea { min-height: 96px; }
 .ticket-info svg { flex-shrink: 0; }
 .ticket-bottom { padding: 20px 24px; font-size: 12px; }
 .ticket-bottom > span:not(.ticket-brand) { overflow-wrap: anywhere; min-width: 0; }
-.mini-avatar { width: 28px; height: 28px; flex-shrink: 0; }
 .ticket-brand { font-size: 24px; }
-.recipe { margin-top: 38px; padding: 0 4px; }
-.recipe h3 { font-size: 16px; }
-.recipe p { font-size: 12px; }
-.recipe p b { color: var(--text); }
-.aside-note p { font-size: 12px; }
 .site-footer { margin: 0 20px; padding: 24px 0 calc(108px + env(safe-area-inset-bottom)); gap: 20px; font-size: 11px; }
 .site-footer > div { display: grid; gap: 6px; }
 .footer-logo { color: var(--text); font-size: 27px; }
@@ -242,14 +237,6 @@ body:has([role="dialog"]) .toast-region { top: calc(14px + env(safe-area-inset-t
   .intro h1 { font-size: clamp(46px, 4.5vw, 58px); letter-spacing: -2.8px; }
   .intro p { font-size: 15px; margin-top: 28px; }
   .desktop-break { display: block; }
-  .intro-note { display: block; margin: 20px 28px 0; }
-  .intro-note p { font-size: 12px; margin-top: 18px; }
-  .intro-note strong { color: var(--text); font-size: 16px; }
-  .friends-stack { display: flex; padding-left: 6px; align-items: center; }
-  .friends-stack > span, .friends-stack i { width: 45px; height: 45px; border: 3px solid var(--bg); border-radius: 50%; background: #e0d3f3; display: grid; place-items: center; font-size: 22px; margin-left: -6px; }
-  .friends-stack > span:nth-child(2) { background: #eed5b7; transform: rotate(-8deg); }
-  .friends-stack > span:nth-child(3) { background: #d4edaa; }
-  .friends-stack i { background: var(--raised); color: var(--accent); }
   .create-layout { grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 42px; }
   .create-panel { padding: 30px; }
   .panel-heading h2 { font-size: 23px; }
@@ -314,4 +301,123 @@ body:has([role="dialog"]) .toast-region { top: calc(14px + env(safe-area-inset-t
   html { scroll-behavior: auto; }
   *, *:before, *:after { animation: none !important; transition: none !important; }
   button:hover, button:active { transform: none !important; }
+}
+
+/* The invitation is the visual anchor: paper, ink, large type, useful motion. */
+.header-cta { border-radius: 6px; background: transparent; }
+.theme-toggle { border: 0; }
+.intro { display: grid; gap: 30px; }
+.eyebrow { font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: 1px; }
+.intro h1 { font-size: clamp(60px, 17vw, 88px); line-height: .97; letter-spacing: -3.5px; text-wrap: nowrap; }
+.intro h1 .hero-line { display: block; color: var(--text); }
+.intro h1 em { display: block; width: fit-content; color: var(--accent); font-family: Georgia, "Times New Roman", serif; font-weight: 400; letter-spacing: -3px; position: relative; }
+.intro h1 em svg { bottom: -8px; stroke-width: 2; opacity: .8; }
+.intro p { margin-top: 24px; font-size: 14px; }
+.idea-starter { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.idea-starter > p { grid-column: 1 / -1; margin: 0 0 2px; font-size: 12px; color: var(--muted); }
+.idea-starter button { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; padding: 12px 9px; min-height: 88px; border: 1px solid var(--line); border-radius: 4px; background: transparent; text-align: left; font-size: 11px; font-weight: 650; }
+.idea-starter button > span:first-child { font-size: 23px; }
+.idea-starter button > svg { display: none; }
+.create-panel { background: transparent; border: 0; box-shadow: none; border-radius: 0; padding: 0; }
+.create-steps { gap: 10px; padding: 0; margin-bottom: 26px; border-bottom: 1px solid var(--line); }
+.create-steps li { position: relative; flex: 1; padding-bottom: 10px; font-size: 11px; gap: 5px; }
+.create-steps li > span, .create-steps button > span { border: 0; border-radius: 0; width: 22px; height: 24px; font-family: ui-monospace, monospace; }
+.create-steps [aria-current] > span { background: transparent; }
+.create-steps button { gap: 5px; }
+.step-line { position: absolute; bottom: -1px; height: 2px; left: 0; right: 0; background: var(--accent); }
+.panel-heading { margin-bottom: 28px; }
+.panel-heading h2 { font-size: 24px; font-weight: 650; letter-spacing: -.8px; }
+.panel-heading p { max-width: 310px; font-size: 13px; }
+input, textarea, select { border-radius: 6px; }
+.primary, .secondary, .dark-button { border-radius: 6px; }
+.primary > svg:last-child { transition: transform 180ms var(--ease); }
+.emoji-picker { gap: 8px; }
+.emoji-picker legend { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+.vibe-label { color: var(--muted); font-size: 12px; font-weight: 450; }
+.emoji-picker button { position: relative; isolation: isolate; border: 0; background: transparent; border-radius: 6px; width: 46px; height: 48px; }
+.emoji-picker button.active { background: transparent; box-shadow: none; }
+.vibe-selection { position: absolute; inset: 0; border-radius: 6px; background: var(--accent-soft); border: 1px solid var(--accent); z-index: -1; }
+.vibe-icon { display: inline-block; }
+.calendar { background: var(--input); border-radius: 6px; margin-inline: 0; }
+.calendar-grid { overflow: hidden; }
+.day { isolation: isolate; }
+.day.selected, .day.selected:hover:not(:disabled) { background: transparent; animation: none; }
+.day-fill { position: absolute; inset: 2px; background: var(--lime); border-radius: 50%; z-index: -1; }
+.day-label { position: relative; }
+.day.today:after { z-index: 1; }
+.time-day { animation: none; }
+.animated-count { display: inline-grid; position: relative; min-width: 1ch; font-variant-numeric: tabular-nums; }
+.animated-count > span { grid-area: 1 / 1; display: inline-block; }
+.slot-choice { border-radius: 7px; }
+.vote-answer { animation: none; min-width: 70px; justify-content: flex-end; }
+.vote-answer-content { display: inline-flex; align-items: center; gap: 6px; }
+.voting-panel { border-radius: 8px; box-shadow: none; }
+.tabs > button, .tab-active { border-radius: 5px; }
+.best-card { border-radius: 6px; background: #d4e7ac; }
+.people-panel { border: 0; border-top: 1px solid var(--line); border-radius: 0; background: transparent; padding: 20px 0; }
+.preview-column { padding: 8px 4px; max-width: 410px; }
+.preview-caption { font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: .6px; margin: 0 0 14px; }
+.ticket-stage { perspective: 900px; }
+.invite-card { --ticket-ink: #28311e; background: #f1e9d6; color: var(--ticket-ink); border: 1px solid #c9c0ab; border-radius: 5px; box-shadow: 4px 5px 0 #00000025; }
+.ticket-top { border-bottom: 1px solid #c9c0ab; padding: 18px 22px; font-size: 10px; letter-spacing: 1.3px; }
+.ticket-edition { font-family: ui-monospace, monospace; font-size: 11px; font-weight: 450; letter-spacing: 0; }
+.ticket-face { min-height: 430px; }
+.ticket-body { padding: 18px 24px 26px; }
+.ticket-art { height: 148px; display: grid; place-items: center; position: relative; margin-bottom: 20px; }
+.ticket-emoji { display: grid; width: 110px; height: 110px; margin: 0; font-size: 78px; }
+.ticket-scrawl { position: absolute; top: 8px; left: -4px; transform: rotate(-9deg); font-family: Georgia, serif; font-size: 23px; font-style: italic; }
+.ticket-stamp { position: absolute; bottom: 0; right: -2px; display: grid; place-items: center; width: 65px; height: 65px; border: 1.5px solid #647149; border-radius: 50%; transform: rotate(12deg); font-family: ui-monospace, monospace; font-size: 12px; line-height: 1.1; text-align: center; color: #596b3e; }
+.ticket-body h2 { font-size: 34px; font-weight: 750; line-height: 1.05; letter-spacing: -1.3px; text-wrap: auto; }
+.ticket-body p { color: #5e6551; font-size: 13px; line-height: 1.65; }
+.ticket-info { font-size: 12px; margin-top: 24px; }
+.ticket-bottom { padding: 18px 24px; border-top: 1px dashed #9eaa85; font-size: 12px; }
+.ticket-bottom:before, .ticket-bottom:after { width: 14px; height: 14px; top: -7px; }
+.ticket-bottom:before { left: -8px; }
+.ticket-bottom:after { right: -8px; }
+.ticket-brand { font-size: 27px; }
+.ticket-turn { width: 100%; border: 0; border-top: 1px solid #c9c0ab; padding: 14px 22px; min-height: 48px; background: #e2d9c1; display: flex; gap: 8px; align-items: center; font-size: 12px; font-weight: 650; color: #28311e; }
+.ticket-turn > svg:last-child { margin-left: auto; }
+.ticket-overline { font-family: ui-monospace, monospace; font-size: 9px; letter-spacing: 1px; }
+.ticket-back h2 { font-family: Georgia, serif; font-size: 42px; font-style: italic; font-weight: 400; margin-top: 16px; }
+.ticket-dates { display: grid; gap: 10px; max-height: 170px; overflow-y: auto; margin-top: 20px; }
+.ticket-dates > div { display: flex; align-items: center; gap: 10px; font-size: 13px; padding-bottom: 10px; border-bottom: 1px solid #c9c0ab; }
+.ticket-dates > div > span { display: flex; flex: 1; justify-content: space-between; gap: 8px; }
+.ticket-body .ticket-draft-note { font-size: 11px; margin-top: 20px; }
+.invite-postscript { display: flex; gap: 14px; margin-top: 25px; color: var(--muted); }
+.invite-postscript > span { font-family: Georgia, serif; font-size: 36px; line-height: 1; }
+.invite-postscript p { font-size: 12px; }
+.invite-postscript b { color: var(--text); font-weight: 550; }
+.mobile-nav { left: 0; right: 0; bottom: 0; padding: 6px 14px calc(6px + env(safe-area-inset-bottom)); border: 0; border-top: 1px solid var(--line); border-radius: 0; background: var(--bg); box-shadow: none; max-width: none; }
+.mobile-nav > button { border-radius: 0; }
+.mobile-nav-indicator { inset: auto 20% 0; height: 2px; border-radius: 0; background: var(--accent); }
+.form-foot { justify-content: flex-start; }
+@media (hover: hover) and (pointer: fine) {
+  .idea-starter button:hover { background: var(--raised); }
+  .idea-starter button:hover > svg { transform: translate(2px, -2px); }
+  .idea-starter button > svg { transition: transform .18s var(--ease); }
+  .primary:hover:not(:disabled) > svg:last-child { transform: translateX(4px); }
+  .ticket-turn:hover { background: #d5cbae; }
+}
+@media (max-width: 389px) {
+  .emoji-picker { display: flex; gap: 5px; }
+  .emoji-picker button { width: 44px; }
+  .intro h1 { font-size: 58px; }
+}
+@media (min-width: 900px) {
+  .intro { grid-template-columns: 1fr 310px; gap: 70px; margin-bottom: 56px; align-items: end; }
+  .intro h1 { font-size: clamp(80px, 7.5vw, 108px); letter-spacing: -6px; }
+  .intro h1 em { letter-spacing: -5px; }
+  .intro p { font-size: 15px; margin-top: 28px; }
+  .idea-starter { grid-template-columns: 1fr; gap: 0; padding-bottom: 6px; }
+  .idea-starter > p { margin-bottom: 12px; }
+  .idea-starter button { flex-direction: row; align-items: center; min-height: 54px; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding: 12px 0; gap: 14px; font-size: 13px; }
+  .idea-starter button > svg { display: block; margin-left: auto; }
+  .create-layout { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 80px; }
+  .create-panel { padding: 0; }
+  .create-steps li { font-size: 12px; }
+  .panel-heading h2 { font-size: 26px; }
+  .preview-column { max-width: 390px; padding-top: 0; }
+  .ticket-face { min-height: 450px; }
+  .ticket-body h2 { font-size: 36px; }
+  .ticket-art { height: 166px; }
 }
